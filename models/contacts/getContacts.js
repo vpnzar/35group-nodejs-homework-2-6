@@ -1,6 +1,6 @@
-import contacts from "../../db/contacts.json";
+import Contact from "../../db/contact";
 
 export default async function getContactById(contactId) {
-  const [contact] = contacts.filter((contact) => contact.id === contactId);
-  return contact;
+  const result = await Contact.findById(contactId);
+  return result;
 }
