@@ -5,6 +5,7 @@ import { postContact } from "../../../controllers/contacts/postController";
 import { putContact } from "../../../controllers/contacts/putController";
 import { patchContact } from "../../../controllers/contacts/patchController";
 import { getContactById } from "../../../controllers/contacts/getByIdController";
+
 import {
   validateCreate,
   validateUpdate,
@@ -12,14 +13,18 @@ import {
   validateUpdateFavorite,
   validateQuery,
 } from "../../../middlewares/validation/contactValidation";
-
+import guard from "../../../middlewares/guard";
 const router = new Router();
 
-router.get("/", validateQuery, getContactList);
-router.get("/:id", validateId, getContactById);
-router.post("/", validateCreate, postContact);
-router.delete("/:id", validateId, deleteContact);
-router.put("/:id", validateId, validateUpdate, putContact);
-router.patch("/:id/favorite", validateId, validateUpdateFavorite, patchContact);
+router.get("/", [guard, validateQuery], getContactList);
+router.get("/:id", [guard, validateId], getContactById);
+router.post("/", [guard, validateCreate], postContact);
+router.delete("/:id", [guard, validateId], deleteContact);
+router.put("/:id", [guard, validateId, validateUpdate], putContact);
+router.patch(
+  "/:id/favorite",
+  [guard, validateId, validateUpdateFavorite],
+  patchContact
+);
 
 export default router;

@@ -1,14 +1,13 @@
 import model from "../../models/contacts/index";
 import { HttpCode } from "../../lib/constants";
 
-export const getContactById = async (req, res, next) => {
-  const { id: userId } = req.user;
+export const aggregation = async (req, res, next) => {
   const { id } = req.params;
-  const contact = await model.getContactById(userId, id);
-  if (contact) {
+  const data = await model.getStatisticsContacts(id);
+  if (data) {
     return res
       .status(HttpCode.OK)
-      .json({ status: "success", code: HttpCode.OK, data: { contact } });
+      .json({ status: "success", code: HttpCode.OK, data });
   }
 
   res
