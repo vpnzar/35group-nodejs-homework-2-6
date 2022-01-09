@@ -1,15 +1,15 @@
 import Contact from "../../db/contact";
 
 export default async function listContacts(
-  sortBy,
-  sortByDesc,
-  filter,
-  limit = 10,
-  skip = 0
+  userId,
+  { sortBy, sortByDesc, filter, limit = 10, skip = 0 }
 ) {
   let sortCriteria = null;
-  let result = Contact.find();
-  const total = await Contact.find().countDocuments();
+  const total = await Contact.find({ owner: userId }).countDocuments();
+  let result = Contact.find({ owner: userId }).populate({
+    path: "owner",
+    select: "name email age role",
+  });
 
   if (sortBy) {
     sortCriteria = { [`${sortBy}`]: 1 };
