@@ -1,5 +1,5 @@
 import UploadFileService from "./storage";
-import LocalFileService from "./local-storage";
-import CloudFileService from "./cloud-storage";
+import LocalFileStorage from "./local-storage";
+import CloudFileStorage from "./cloud-storage";
 
-export { UploadFileService, LocalFileService, CloudFileService };
+export { UploadFileService, LocalFileStorage, CloudFileStorage };
